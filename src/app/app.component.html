@@ -1,11 +1,18 @@
+
+<div id="title">
+  <h1>Sample table</h1>
+</div>
+
 <div class="p-grid" id="tableau-section">
+
   <div class="p-col" *ngIf="cols && dataParHeure">
 
     <p-table [columns]="cols" [value]="dataParHeure" [scrollable]="true"
              [style]="{width: '1000px'}"
              frozenWidth="160px"
              [reorderableColumns]="true"
-             [scrollHeight]="'500px'"
+             (window:resize)="onResize()"
+             [scrollHeight]="hauteurGrille+'px'"
     >
 
       <ng-template pTemplate="frozenheader">
@@ -76,4 +83,9 @@
     </p-table>
 
   </div>
+
+</div>
+
+<div id="footer">
+  <h2>Footer {{hauteurGrille}}</h2>
 </div>

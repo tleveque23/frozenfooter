@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 interface Colonne {
   header: string;
@@ -28,6 +28,11 @@ export class AppComponent implements OnInit {
   public cols: Colonne[];
   public dataParHeure: DateHeure[];
   public dateHeure: Date[];
+  public hauteurGrille: number = 250;
+
+
+  constructor(private ref: ChangeDetectorRef) {
+  }
 
   public ngOnInit(): void {
 
@@ -79,5 +84,18 @@ export class AppComponent implements OnInit {
 
   private static genererNomUnique(): string {
     return `${new Date().getTime()}${Math.round(Math.random() * 100)}`;
+  }
+
+  public onResize() {
+    this.setScroll();
+  }
+
+  // Si l'utilisateur change la dimension de l'écran, on ajuste la hauteur du tableau
+  private setScroll() {
+    // const rangeeTotal = document.getElementById('rangee-total');
+    this.hauteurGrille = window.innerHeight -
+      document.getElementById('title').getBoundingClientRect().top -
+      document.getElementById('footer').getBoundingClientRect().height - 300;
+    this.ref.detectChanges();
   }
 }
